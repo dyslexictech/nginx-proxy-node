@@ -1,9 +1,9 @@
-FROM node:latest
+FROM debian:jessie
 
 WORKDIR /nginx
 
 EXPOSE 80
 
-RUN echo 'deb http://nginx.org/packages/debian/ jessie nginx' >> /etc/apt/sources.list && curl http://nginx.org/keys/nginx_signing.key -o nginx_signing.key && apt-key add nginx_signing.key && apt-get update && apt-get install nginx -y
+RUN apt-get update && apt-get install curl -y && echo 'deb http://httpredir.debian.org/debian jessie-backports main' >> /etc/apt/sources.list && curl -sL https://deb.nodesource.com/setup_5.x | bash - && apt-get install nginx -y && apt-get install nodejs -y && apt-get clean
 
 COPY nginx.conf /etc/nginx/nginx.conf
